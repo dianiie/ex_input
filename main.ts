@@ -123,3 +123,15 @@ function Pump (action: string) {
         pins.digitalWritePin(DigitalPin.P15, 1)
     }
 }
+basic.forever(function () {
+    Read_Sensor()
+    if (pinRain == 1) {
+        Cloths("c")
+        Windows("c")
+        basic.pause(100)
+    } else if (pinRain == 0) {
+        Cloths("o")
+        Windows("o")
+        basic.pause(100)
+    }
+})

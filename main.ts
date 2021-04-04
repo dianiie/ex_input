@@ -1,11 +1,3 @@
-let pinRain = 0
-let pinSoil = 0
-let pinTouch = 0
-let pinFlame = 0
-let pinPhoto = 0
-let pinTemp = 0
-let dgr = 0
-let Light = 0
 function CW () {
     for (let index = 0; index <= 180; index++) {
         pins.servoWritePin(AnalogPin.P16, index)
@@ -66,19 +58,9 @@ function Heater (action: string) {
 }
 function Windows (action: string) {
     if (action == "O" || action == "o") {
-        dgr = 10
-        for (let index = 0; index < 80; index++) {
-            pins.servoWritePin(AnalogPin.P16, dgr)
-            dgr += 1
-            control.waitMicros(20000)
-        }
+        pins.servoWritePin(AnalogPin.P16, 90)
     } else if (action == "C" || action == "c") {
-        dgr = 90
-        for (let index = 0; index < 80; index++) {
-            pins.servoWritePin(AnalogPin.P16, dgr)
-            dgr += -1
-            control.waitMicros(20000)
-        }
+        pins.servoWritePin(AnalogPin.P16, 10)
     }
 }
 function Fan (action: string) {
@@ -90,19 +72,9 @@ function Fan (action: string) {
 }
 function Cloths (action: string) {
     if (action == "O" || action == "o") {
-        dgr = 120
-        for (let index = 0; index < 100; index++) {
-            pins.servoWritePin(AnalogPin.P8, dgr)
-            dgr += -1
-            control.waitMicros(20000)
-        }
+        pins.servoWritePin(AnalogPin.P8, 20)
     } else if (action == "C" || action == "c") {
-        dgr = 20
-        for (let index = 0; index < 100; index++) {
-            pins.servoWritePin(AnalogPin.P8, dgr)
-            dgr += 1
-            control.waitMicros(20000)
-        }
+        pins.servoWritePin(AnalogPin.P8, 120)
     }
 }
 function CCW () {
@@ -123,15 +95,25 @@ function Pump (action: string) {
         pins.digitalWritePin(DigitalPin.P15, 1)
     }
 }
+let Light = 0
+let dgr = 0
+let pinTemp = 0
+let pinPhoto = 0
+let pinFlame = 0
+let pinTouch = 0
+let pinSoil = 0
+let pinRain = 0
+Cloths("o")
+Windows("o")
 basic.forever(function () {
     Read_Sensor()
     if (pinRain == 1) {
-        Cloths("c")
-        Windows("c")
-        basic.pause(100)
-    } else if (pinRain == 0) {
         Cloths("o")
         Windows("o")
+        basic.pause(100)
+    } else if (pinRain == 0) {
+        Cloths("c")
+        Windows("c")
         basic.pause(100)
     }
 })

@@ -105,15 +105,30 @@ let pinSoil = 0
 let pinRain = 0
 Cloths("o")
 Windows("o")
+Fan("off")
+Pump("off")
 basic.forever(function () {
     Read_Sensor()
     if (pinRain == 1) {
         Cloths("o")
         Windows("o")
-        basic.pause(100)
+        basic.pause(1000)
     } else if (pinRain == 0) {
         Cloths("c")
         Windows("c")
-        basic.pause(100)
+        basic.pause(1000)
+    }
+    if (pinTemp == 0) {
+        Fan("off")
+        Pump("off")
+        basic.pause(1000)
+    } else if (pinTemp == 1) {
+        Fan("on")
+        Pump("off")
+        basic.pause(1000)
+    } else if (pinTemp == 2) {
+        Fan("on")
+        Pump("on")
+        basic.pause(1000)
     }
 })
